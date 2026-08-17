@@ -10,9 +10,9 @@ import (
 
 // HotelRating 酒店聚合评分结果。
 type HotelRating struct {
-	HotelID    string  `json:"hotel_id"`
-	ReviewCount int    `json:"review_count"`
-	AvgRating  float64 `json:"avg_rating"`
+	HotelID     string  `json:"hotel_id"`
+	ReviewCount int     `json:"review_count"`
+	AvgRating   float64 `json:"avg_rating"`
 }
 
 func (s *Service) CreateReview(review model.Review) (*model.Review, error) {

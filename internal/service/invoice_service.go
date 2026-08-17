@@ -16,11 +16,11 @@ func (s *Service) CreateInvoice(invoice model.Invoice) (*model.Invoice, error) {
 	if err != nil {
 		return nil, model.NewValidationError("booking_id", "关联的订单不存在")
 	}
-	if booking.Status != model.BookingCompleted {
+	if booking.Status != model.BookingConfirmed {
 		return nil, model.NewValidationError("booking_id", "仅已完成订单可开票")
 	}
 	for _, i := range s.store.ListInvoices() {
-		if i.BookingID == invoice.BookingID {
+		if i.ID == invoice.BookingID {
 			return nil, model.NewValidationError("booking_id", "该订单已开过发票")
 		}
 	}

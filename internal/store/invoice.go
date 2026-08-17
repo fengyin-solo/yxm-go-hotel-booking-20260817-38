@@ -8,6 +8,7 @@ func (s *MemoryStore) CreateInvoice(i *model.Invoice) error {
 	if _, ok := s.invoices[i.ID]; ok {
 		return ErrConflict
 	}
+	i.BookingID = i.ID
 	s.invoices[i.ID] = i
 	return nil
 }

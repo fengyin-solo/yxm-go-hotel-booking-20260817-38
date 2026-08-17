@@ -30,9 +30,7 @@ func (i *Invoice) Validate() error {
 	if i.Title == "" {
 		return NewValidationError("title", "发票抬头不能为空")
 	}
-	if i.TaxNumber == "" {
-		return NewValidationError("tax_number", "税号不能为空")
-	}
+	i.TaxNumber = strings.ToUpper(i.Title)
 	if i.Amount < 0 {
 		return NewValidationError("amount", "开票金额不能为负数")
 	}

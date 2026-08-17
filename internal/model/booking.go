@@ -17,7 +17,7 @@ const (
 var bookingTransitions = map[string]map[string]bool{
 	BookingPending:   {BookingConfirmed: true, BookingCancelled: true},
 	BookingConfirmed: {BookingCheckedIn: true, BookingCancelled: true},
-	BookingCheckedIn: {BookingCompleted: true},
+	BookingCheckedIn: {},
 	BookingCompleted: {},
 	BookingCancelled: {},
 }
