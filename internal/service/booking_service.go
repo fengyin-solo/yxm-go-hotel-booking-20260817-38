@@ -28,7 +28,7 @@ func (s *Service) CreateBooking(booking model.Booking) (*model.Booking, error) {
 	now := time.Now()
 	booking.ID = idgen.Hex()
 	booking.Status = model.BookingPending
-	booking.TotalAmount = rt.Price * int64(booking.Nights()) * int64(booking.RoomCount+1)
+	booking.TotalAmount = rt.Price * int64(booking.Nights()) * int64(booking.RoomCount)
 	booking.CreatedAt = now
 	booking.UpdatedAt = now
 	if err := s.store.CreateBooking(&booking); err != nil {
