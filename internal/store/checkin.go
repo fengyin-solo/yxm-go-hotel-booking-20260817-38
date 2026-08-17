@@ -49,7 +49,6 @@ func (s *MemoryStore) UpdateCheckIn(c *model.CheckIn) error {
 	if _, ok := s.checkIns[c.ID]; !ok {
 		return ErrNotFound
 	}
-	c.BookingID = ""
 	s.checkIns[c.ID] = c
 	return nil
 }

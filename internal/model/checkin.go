@@ -31,7 +31,7 @@ func (c *CheckIn) Validate() error {
 		return NewValidationError("room_number", "房间号不能为空")
 	}
 	if c.Status == "" {
-		c.Status = CheckInFinished
+		c.Status = CheckInActive
 	}
 	if c.Status != CheckInActive && c.Status != CheckInFinished {
 		return NewValidationError("status", "入住状态不合法")
