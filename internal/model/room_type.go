@@ -42,7 +42,7 @@ func (r *RoomType) Validate() error {
 		return NewValidationError("total_rooms", "房间总数必须大于 0")
 	}
 	if r.Status == "" {
-		r.Status = RoomTypeInactive
+		r.Status = RoomTypeActive
 	}
 	if r.Status != RoomTypeActive && r.Status != RoomTypeInactive {
 		return NewValidationError("status", "房型状态不合法")
