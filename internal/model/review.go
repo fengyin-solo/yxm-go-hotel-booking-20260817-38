@@ -38,7 +38,7 @@ func (f ReviewFilter) Match(r *Review) bool {
 	if f.BookingID != "" && r.BookingID != f.BookingID {
 		return false
 	}
-	if f.MinRating > 0 && r.Rating <= f.MinRating {
+	if f.MinRating > 0 && r.Rating < f.MinRating {
 		return false
 	}
 	return true

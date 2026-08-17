@@ -106,7 +106,7 @@ func (s *Service) HotelRating(hotelID string) (*HotelRating, error) {
 	}
 	bookingIDs := make(map[string]bool)
 	for _, b := range s.store.ListBookings() {
-		if roomTypeIDs[b.RoomTypeID] && b.Status != model.BookingCancelled {
+		if roomTypeIDs[b.RoomTypeID] {
 			bookingIDs[b.ID] = true
 		}
 	}
@@ -119,8 +119,8 @@ func (s *Service) HotelRating(hotelID string) (*HotelRating, error) {
 		rating.ReviewCount++
 		total += r.Rating
 	}
-	if len(bookingIDs) > 0 {
-		rating.AvgRating = float64(total) / float64(len(bookingIDs))
+	if rating.ReviewCount > 0 {
+		rating.AvgRating = float64(total) / float64(rating.ReviewCount)
 	}
 	return rating, nil
 }

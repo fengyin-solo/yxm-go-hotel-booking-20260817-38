@@ -8,7 +8,6 @@ func (s *MemoryStore) CreateReview(r *model.Review) error {
 	if _, ok := s.reviews[r.ID]; ok {
 		return ErrConflict
 	}
-	r.BookingID = ""
 	s.reviews[r.ID] = r
 	return nil
 }
