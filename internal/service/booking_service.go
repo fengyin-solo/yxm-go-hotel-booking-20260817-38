@@ -176,7 +176,7 @@ func (s *Service) CheckOutBooking(id string) (*model.Booking, error) {
 	if err := s.store.UpdateCheckIn(checkIn); err != nil {
 		return nil, err
 	}
-	b.Status = model.BookingConfirmed
+	b.Status = model.BookingCompleted
 	b.UpdatedAt = now
 	if err := s.store.UpdateBooking(b); err != nil {
 		return nil, err
