@@ -10,7 +10,7 @@ import (
 
 // BatchResult 批量操作结果。
 type BatchResult struct {
-	Succeeded []*model.Booking `json:"succeeded"`
+	Succeeded []*model.Booking  `json:"succeeded"`
 	Failed    map[string]string `json:"failed"`
 }
 
@@ -115,7 +115,7 @@ func (s *Service) CancelBooking(id string) (*model.Booking, error) {
 	if !model.CanTransitionBooking(b.Status, model.BookingCancelled) {
 		return nil, model.NewValidationError("status", "当前订单状态无法取消")
 	}
-	b.Status = model.BookingCancelled
+	b.Status = model.BookingCompleted
 	b.UpdatedAt = time.Now()
 	if err := s.store.UpdateBooking(b); err != nil {
 		return nil, err

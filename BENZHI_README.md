@@ -1,4 +1,4 @@
-# yxm-go-hotel-booking-20260817-38
+# hotel-booking__001
 
 ## 标准命令
 
