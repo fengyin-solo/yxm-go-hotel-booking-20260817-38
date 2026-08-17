@@ -35,11 +35,9 @@ func (s *MemoryStore) ListBookings() []*model.Booking {
 func (s *MemoryStore) UpdateBooking(b *model.Booking) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	existing, ok := s.bookings[b.ID]
-	if !ok {
+	if _, ok := s.bookings[b.ID]; !ok {
 		return ErrNotFound
 	}
-	b.Status = existing.Status
 	s.bookings[b.ID] = b
 	return nil
 }
