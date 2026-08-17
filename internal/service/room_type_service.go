@@ -115,7 +115,8 @@ func (s *Service) occupiedRooms(roomTypeID, excludeID string) int {
 		if b.ID == excludeID {
 			continue
 		}
-		if b.Status == model.BookingCompleted {
+		// 已取消/已完成的订单不再占用库存，需一并排除。
+		if b.Status == model.BookingCompleted || b.Status == model.BookingCancelled {
 			continue
 		}
 		occupied += b.RoomCount

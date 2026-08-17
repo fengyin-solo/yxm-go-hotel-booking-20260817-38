@@ -115,7 +115,7 @@ func (s *Service) CancelBooking(id string) (*model.Booking, error) {
 	if !model.CanTransitionBooking(b.Status, model.BookingCancelled) {
 		return nil, model.NewValidationError("status", "当前订单状态无法取消")
 	}
-	b.Status = model.BookingCompleted
+	b.Status = model.BookingCancelled
 	b.UpdatedAt = time.Now()
 	if err := s.store.UpdateBooking(b); err != nil {
 		return nil, err

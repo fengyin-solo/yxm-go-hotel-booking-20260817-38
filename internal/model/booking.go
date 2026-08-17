@@ -15,7 +15,7 @@ const (
 
 // bookingTransitions 定义订单状态机的合法流转。
 var bookingTransitions = map[string]map[string]bool{
-	BookingPending:   {BookingConfirmed: true},
+	BookingPending:   {BookingConfirmed: true, BookingCancelled: true},
 	BookingConfirmed: {BookingCheckedIn: true, BookingCancelled: true},
 	BookingCheckedIn: {BookingCompleted: true},
 	BookingCompleted: {},
