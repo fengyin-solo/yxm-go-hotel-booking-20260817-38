@@ -8,13 +8,13 @@ import (
 
 // MemoryStore 基于内存 map 的 Store 实现。
 type MemoryStore struct {
-	mu         sync.RWMutex
-	hotels     map[string]*model.Hotel
-	roomTypes  map[string]*model.RoomType
-	bookings   map[string]*model.Booking
-	checkIns   map[string]*model.CheckIn
-	reviews    map[string]*model.Review
-	invoices   map[string]*model.Invoice
+	mu        sync.RWMutex
+	hotels    map[string]*model.Hotel
+	roomTypes map[string]*model.RoomType
+	bookings  map[string]*model.Booking
+	checkIns  map[string]*model.CheckIn
+	reviews   map[string]*model.Review
+	invoices  map[string]*model.Invoice
 }
 
 func NewMemoryStore() *MemoryStore {

@@ -10,7 +10,7 @@ import (
 
 // BatchResult 批量操作结果。
 type BatchResult struct {
-	Succeeded []*model.Booking `json:"succeeded"`
+	Succeeded []*model.Booking  `json:"succeeded"`
 	Failed    map[string]string `json:"failed"`
 }
 

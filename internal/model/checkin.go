@@ -12,14 +12,14 @@ const (
 
 // CheckIn 表示一次入住记录，由订单确认后办理入住产生。
 type CheckIn struct {
-	ID           string    `json:"id"`
-	BookingID    string    `json:"booking_id"`
-	RoomNumber   string    `json:"room_number"`
-	CheckedInAt  time.Time `json:"checked_in_at"`
+	ID           string     `json:"id"`
+	BookingID    string     `json:"booking_id"`
+	RoomNumber   string     `json:"room_number"`
+	CheckedInAt  time.Time  `json:"checked_in_at"`
 	CheckedOutAt *time.Time `json:"checked_out_at"`
-	Status       string    `json:"status"`
-	CreatedAt    time.Time `json:"created_at"`
-	UpdatedAt    time.Time `json:"updated_at"`
+	Status       string     `json:"status"`
+	CreatedAt    time.Time  `json:"created_at"`
+	UpdatedAt    time.Time  `json:"updated_at"`
 }
 
 func (c *CheckIn) Validate() error {
@@ -31,7 +31,7 @@ func (c *CheckIn) Validate() error {
 		return NewValidationError("room_number", "房间号不能为空")
 	}
 	if c.Status == "" {
-		c.Status = CheckInActive
+		c.Status = CheckInFinished
 	}
 	if c.Status != CheckInActive && c.Status != CheckInFinished {
 		return NewValidationError("status", "入住状态不合法")

@@ -115,7 +115,7 @@ func (s *Service) occupiedRooms(roomTypeID, excludeID string) int {
 		if b.ID == excludeID {
 			continue
 		}
-		if b.Status == model.BookingCancelled || b.Status == model.BookingCompleted {
+		if b.Status == model.BookingCancelled {
 			continue
 		}
 		occupied += b.RoomCount

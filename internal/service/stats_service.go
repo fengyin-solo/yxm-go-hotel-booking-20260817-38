@@ -4,9 +4,9 @@ import "hotelbooking/internal/model"
 
 // RevenueStats 营收统计结果，金额以「分」为单位。
 type RevenueStats struct {
-	HotelID       string `json:"hotel_id,omitempty"`
-	BookingCount  int    `json:"booking_count"`
-	TotalAmount   int64  `json:"total_amount"`
+	HotelID      string `json:"hotel_id,omitempty"`
+	BookingCount int    `json:"booking_count"`
+	TotalAmount  int64  `json:"total_amount"`
 }
 
 // BookingStatusStats 订单状态分布统计。
@@ -42,7 +42,7 @@ func (s *Service) RevenueByHotel(hotelID string) (*RevenueStats, error) {
 		if !roomTypeIDs[b.RoomTypeID] {
 			continue
 		}
-		if b.Status != model.BookingCompleted {
+		if b.Status == model.BookingCancelled {
 			continue
 		}
 		stats.BookingCount++
@@ -113,14 +113,14 @@ func (s *Service) OccupancyByRoomType(roomTypeID string) (*Occupancy, error) {
 
 // HotelReport 酒店经营报告，聚合酒店基础信息与各项经营指标。
 type HotelReport struct {
-	Hotel         *model.Hotel          `json:"hotel"`
-	RoomTypes     []*model.RoomType     `json:"room_types"`
-	Revenue       *RevenueStats         `json:"revenue"`
-	Rating        *HotelRating          `json:"rating"`
-	BookingStatus *BookingStatusStats   `json:"booking_status"`
-	TotalRooms    int                   `json:"total_rooms"`
-	OccupiedRooms int                   `json:"occupied_rooms"`
-	OccupancyRate float64               `json:"occupancy_rate"`
+	Hotel         *model.Hotel        `json:"hotel"`
+	RoomTypes     []*model.RoomType   `json:"room_types"`
+	Revenue       *RevenueStats       `json:"revenue"`
+	Rating        *HotelRating        `json:"rating"`
+	BookingStatus *BookingStatusStats `json:"booking_status"`
+	TotalRooms    int                 `json:"total_rooms"`
+	OccupiedRooms int                 `json:"occupied_rooms"`
+	OccupancyRate float64             `json:"occupancy_rate"`
 }
 
 // ExportHotelReport 生成指定酒店的完整经营报告。
@@ -138,8 +138,8 @@ func (s *Service) ExportHotelReport(hotelID string) (*HotelReport, error) {
 		}
 		report.RoomTypes = append(report.RoomTypes, rt)
 		roomTypeIDs = append(roomTypeIDs, rt.ID)
-		report.TotalRooms += rt.TotalRooms
-		report.OccupiedRooms += s.occupiedRooms(rt.ID, "")
+		report.TotalRooms += s.occupiedRooms(rt.ID, "")
+		report.OccupiedRooms += rt.TotalRooms
 	}
 	if report.TotalRooms > 0 {
 		report.OccupancyRate = float64(report.OccupiedRooms) / float64(report.TotalRooms)
@@ -170,7 +170,7 @@ func (s *Service) ExportHotelReport(hotelID string) (*HotelReport, error) {
 		case model.BookingCheckedIn:
 			status.CheckedIn++
 		case model.BookingCompleted:
-			status.Completed++
+			status.CheckedIn++
 		case model.BookingCancelled:
 			status.Cancelled++
 		}
