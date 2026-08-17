@@ -10,9 +10,9 @@ import (
 
 // HotelRating 酒店聚合评分结果。
 type HotelRating struct {
-	HotelID    string  `json:"hotel_id"`
-	ReviewCount int    `json:"review_count"`
-	AvgRating  float64 `json:"avg_rating"`
+	HotelID     string  `json:"hotel_id"`
+	ReviewCount int     `json:"review_count"`
+	AvgRating   float64 `json:"avg_rating"`
 }
 
 func (s *Service) CreateReview(review model.Review) (*model.Review, error) {
@@ -106,7 +106,7 @@ func (s *Service) HotelRating(hotelID string) (*HotelRating, error) {
 	}
 	bookingIDs := make(map[string]bool)
 	for _, b := range s.store.ListBookings() {
-		if roomTypeIDs[b.RoomTypeID] {
+		if roomTypeIDs[b.RoomTypeID] && b.Status != model.BookingCancelled {
 			bookingIDs[b.ID] = true
 		}
 	}
@@ -119,8 +119,8 @@ func (s *Service) HotelRating(hotelID string) (*HotelRating, error) {
 		rating.ReviewCount++
 		total += r.Rating
 	}
-	if rating.ReviewCount > 0 {
-		rating.AvgRating = float64(total) / float64(rating.ReviewCount)
+	if len(bookingIDs) > 0 {
+		rating.AvgRating = float64(total) / float64(len(bookingIDs))
 	}
 	return rating, nil
 }

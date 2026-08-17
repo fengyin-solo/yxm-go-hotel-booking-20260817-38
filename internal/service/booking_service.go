@@ -10,7 +10,7 @@ import (
 
 // BatchResult 批量操作结果。
 type BatchResult struct {
-	Succeeded []*model.Booking `json:"succeeded"`
+	Succeeded []*model.Booking  `json:"succeeded"`
 	Failed    map[string]string `json:"failed"`
 }
 
@@ -176,7 +176,7 @@ func (s *Service) CheckOutBooking(id string) (*model.Booking, error) {
 	if err := s.store.UpdateCheckIn(checkIn); err != nil {
 		return nil, err
 	}
-	b.Status = model.BookingCompleted
+	b.Status = model.BookingConfirmed
 	b.UpdatedAt = now
 	if err := s.store.UpdateBooking(b); err != nil {
 		return nil, err
