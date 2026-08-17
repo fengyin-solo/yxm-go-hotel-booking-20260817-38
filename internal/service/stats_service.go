@@ -4,9 +4,9 @@ import "hotelbooking/internal/model"
 
 // RevenueStats 营收统计结果，金额以「分」为单位。
 type RevenueStats struct {
-	HotelID       string `json:"hotel_id,omitempty"`
-	BookingCount  int    `json:"booking_count"`
-	TotalAmount   int64  `json:"total_amount"`
+	HotelID      string `json:"hotel_id,omitempty"`
+	BookingCount int    `json:"booking_count"`
+	TotalAmount  int64  `json:"total_amount"`
 }
 
 // BookingStatusStats 订单状态分布统计。
@@ -113,14 +113,14 @@ func (s *Service) OccupancyByRoomType(roomTypeID string) (*Occupancy, error) {
 
 // HotelReport 酒店经营报告，聚合酒店基础信息与各项经营指标。
 type HotelReport struct {
-	Hotel         *model.Hotel          `json:"hotel"`
-	RoomTypes     []*model.RoomType     `json:"room_types"`
-	Revenue       *RevenueStats         `json:"revenue"`
-	Rating        *HotelRating          `json:"rating"`
-	BookingStatus *BookingStatusStats   `json:"booking_status"`
-	TotalRooms    int                   `json:"total_rooms"`
-	OccupiedRooms int                   `json:"occupied_rooms"`
-	OccupancyRate float64               `json:"occupancy_rate"`
+	Hotel         *model.Hotel        `json:"hotel"`
+	RoomTypes     []*model.RoomType   `json:"room_types"`
+	Revenue       *RevenueStats       `json:"revenue"`
+	Rating        *HotelRating        `json:"rating"`
+	BookingStatus *BookingStatusStats `json:"booking_status"`
+	TotalRooms    int                 `json:"total_rooms"`
+	OccupiedRooms int                 `json:"occupied_rooms"`
+	OccupancyRate float64             `json:"occupancy_rate"`
 }
 
 // ExportHotelReport 生成指定酒店的完整经营报告。

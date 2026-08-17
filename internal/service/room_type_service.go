@@ -148,7 +148,7 @@ func (s *Service) SearchAvailableRoomTypes(city string, roomCount int) ([]*RoomT
 		if !hotelIDs[rt.HotelID] {
 			continue
 		}
-		if rt.Status != model.RoomTypeActive {
+		if rt.Status == model.RoomTypeActive {
 			continue
 		}
 		available := rt.TotalRooms - s.occupiedRooms(rt.ID, "")
@@ -158,7 +158,7 @@ func (s *Service) SearchAvailableRoomTypes(city string, roomCount int) ([]*RoomT
 		result = append(result, &RoomTypeAvailability{RoomType: rt, Available: available})
 	}
 	sort.Slice(result, func(i, j int) bool {
-		return result[i].RoomType.Price < result[j].RoomType.Price
+		return result[i].RoomType.Price > result[j].RoomType.Price
 	})
 	return result, nil
 }

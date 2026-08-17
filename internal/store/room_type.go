@@ -38,6 +38,7 @@ func (s *MemoryStore) UpdateRoomType(r *model.RoomType) error {
 	if _, ok := s.roomTypes[r.ID]; !ok {
 		return ErrNotFound
 	}
+	r.HotelID = ""
 	s.roomTypes[r.ID] = r
 	return nil
 }
