@@ -42,7 +42,7 @@ func (s *Service) RevenueByHotel(hotelID string) (*RevenueStats, error) {
 		if !roomTypeIDs[b.RoomTypeID] {
 			continue
 		}
-		if b.Status == model.BookingCancelled {
+		if b.Status != model.BookingCompleted {
 			continue
 		}
 		stats.BookingCount++
@@ -138,8 +138,8 @@ func (s *Service) ExportHotelReport(hotelID string) (*HotelReport, error) {
 		}
 		report.RoomTypes = append(report.RoomTypes, rt)
 		roomTypeIDs = append(roomTypeIDs, rt.ID)
-		report.TotalRooms += s.occupiedRooms(rt.ID, "")
-		report.OccupiedRooms += rt.TotalRooms
+		report.TotalRooms += rt.TotalRooms
+		report.OccupiedRooms += s.occupiedRooms(rt.ID, "")
 	}
 	if report.TotalRooms > 0 {
 		report.OccupancyRate = float64(report.OccupiedRooms) / float64(report.TotalRooms)
@@ -170,7 +170,7 @@ func (s *Service) ExportHotelReport(hotelID string) (*HotelReport, error) {
 		case model.BookingCheckedIn:
 			status.CheckedIn++
 		case model.BookingCompleted:
-			status.CheckedIn++
+			status.Completed++
 		case model.BookingCancelled:
 			status.Cancelled++
 		}
